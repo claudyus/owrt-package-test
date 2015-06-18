@@ -52,7 +52,7 @@ _downlod_sdk() {
         if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
             wget http://lagopus.rd.unidata.it/sdk/sdk_${release}_${arch}.tar.bz2 -O $build_dir/sdk_${release}_${arch}.tar.bz2
         fi
-        tar xvjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
+        tar xjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
     fi
 }
 
