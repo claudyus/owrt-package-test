@@ -1,6 +1,9 @@
 OpenWrt package compile tester
 ==============================
 
+.. image:: https://travis-ci.org/claudyus/owrt-package-test.svg?branch=master
+    :target: https://travis-ci.org/claudyus/owrt-package-test
+
 This project allow you to test and compile your OpenWrt package against different versions
 of openwrt releases.
 The goal of this project is to allow you to integrate and use some CI functionality in the
