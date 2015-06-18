@@ -15,7 +15,7 @@ echo Version $V
 
 #default values
 arch=ar71xx
-release=trunk
+release=barrier_breaker
 build_dir=/tmp/owrt-pkgtest
 
 #parse command line
@@ -55,7 +55,7 @@ _downlod_sdk() {
         mkdir -p $build_dir/owrt-sdk/
         #TODO retrieve all SDKs
         if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
-            wget http://claudyus.github.io/owrt-package-test/sdk/sdk_${release}_${arch}.tar.bz2 -O $build_dir/sdk_${release}_${arch}.tar.bz2
+            wget http://lagopus.rd.unidata.it/sdk/sdk_${release}_${arch}.tar.bz2 -O $build_dir/sdk_${release}_${arch}.tar.bz2
         fi
         tar xvjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
     fi
