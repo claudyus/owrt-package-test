@@ -1,0 +1,9 @@
+language: python
+
+install:
+    - sudo pip install bash8
+    - sudo cp owrt-pkgtest /usr/local/bin
+
+script:
+    - bash8 owrt-pkgtest
+    - owrt-pkgtest -d test sys_test

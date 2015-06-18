@@ -1,0 +1,79 @@
+#!/bin/bash
+# Copyright (C) 2015 - Claudio Mignanti
+#
+# This is free software, licensed under the MIT licence.
+# See /LICENSE for more information.
+#
+
+set -x
+
+V=`cat .version `
+
+echo owrt-pkgtest - OpenWrt Package test
+echo ------------------------------
+echo Version $V
+
+#default values
+arch=ar71xx
+release=trunk
+build_dir=/tmp/owrt-pkgtest
+
+#parse command line
+while [ $# -gt 0 ]; do
+    case $1  in
+        -a)
+            arch=$2
+            shift 2
+        ;;
+        -r)
+            release=$2
+            shift 2
+        ;;
+        -d)
+            dir_package=$2/
+            shift 1
+        ;;
+        -b)
+            build_dir=$2
+            shift 1
+        ;;
+        *)
+            test_pkg=$1
+            shift
+        ;;
+    esac
+done
+
+if [ -z $test_pkg ]; then
+    echo "err: no package name provided. exiting"
+    exit 1
+fi
+
+_downlod_sdk() {
+    if [ ! -d $build_dir/owrt-sdk/ ]; then
+        # download the sdk and extract it inside build_dir
+        mkdir -p $build_dir/owrt-sdk/
+        #TODO retrieve all SDKs
+        if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
+            wget http://claudyus.github.io/owrt-package-test/sdk/sdk_${release}_${arch}.tar.bz2 -O $build_dir/sdk_${release}_${arch}.tar.bz2
+        fi
+        tar xvjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
+    fi
+}
+
+_add_package2test() {
+    cp -fr $dir_package $build_dir/owrt-sdk/pkg
+    cp $build_dir/owrt-sdk/feeds.conf.default $build_dir/owrt-sdk/feeds.conf
+    echo "src-link testing $build_dir/owrt-sdk/pkg" >> $build_dir/owrt-sdk/feeds.conf
+    $build_dir/owrt-sdk/scripts/feeds update
+    $build_dir/owrt-sdk/scripts/feeds list -r testing
+    $build_dir/owrt-sdk/scripts/feeds install -a -p testing -d y
+}
+
+_downlod_sdk
+
+_add_package2test
+
+make -C $build_dir/owrt-sdk package/$test_pkg/compile V=s
+
+exit $?
