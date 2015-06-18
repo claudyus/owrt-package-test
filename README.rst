@@ -1,10 +1,10 @@
 OpenWrt package compile tester
 ==============================
 
-This project allow you to test and compile you OpenWrt package against different version
-of openwrt relese.
-The goal of this project is to allow you to integrate and use some CI functionality in an
-OpenWrt enviroment
+This project allow you to test and compile your OpenWrt package against different versions
+of openwrt releases.
+The goal of this project is to allow you to integrate and use some CI functionality in the
+OpenWrt enviroment.
 
 
 Install the script
@@ -24,7 +24,9 @@ The owrt-pkgtest utilities support the following options::
   owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] <package_name>
 
 
-It will download the correct ``arch/release`` sdk from a web mirror that down it will copy all the ``package_dir_root`` subdirectory inside the sdk and it will run the compile target for ``package_name``.
+It will download the correct ``arch/release`` sdk from a webserver mirror than it will
+copy all the ``package_dir_root`` subdirectory inside the sdk and it will run the
+compile target for ``package_name``.
 
 The standard openwrt feeds are included to meet possible depends.
 

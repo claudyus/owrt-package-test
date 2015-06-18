@@ -1,8 +1,7 @@
 #!/bin/bash
 # Copyright (C) 2015 - Claudio Mignanti
 #
-# This is free software, licensed under the MIT licence.
-# See /LICENSE for more information.
+# This is free software, licensed under the MIT license.
 #
 
 echo owrt-pkgtest - OpenWrt Package tester
