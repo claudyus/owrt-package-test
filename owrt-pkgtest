@@ -5,13 +5,7 @@
 # See /LICENSE for more information.
 #
 
-set -x
-
-V=`cat .version `
-
-echo owrt-pkgtest - OpenWrt Package test
-echo ------------------------------
-echo Version $V
+echo owrt-pkgtest - OpenWrt Package tester
 
 #default values
 arch=ar71xx
