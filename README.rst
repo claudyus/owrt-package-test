@@ -1,0 +1,50 @@
+OpenWrt package compile tester
+==============================
+
+This project allow you to test and compile you OpenWrt package against different version
+of openwrt relese.
+The goal of this project is to allow you to integrate and use some CI functionality in an
+OpenWrt enviroment
+
+
+Install the script
+------------------
+
+To install the script you can simple type::
+
+  wget https://raw.githubusercontent.com/claudyus/owrt-package-test/master/owrt-pkgtest -O /usr/local/bin/owrt-pkgtest
+  chmod a+x /usr/local/bin/owrt-pkgtest
+
+
+Usage of the script
+-------------------
+
+The owrt-pkgtest utilities support the following options::
+
+  owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] <package_name>
+
+
+It will download the correct ``arch/release`` sdk from a web mirror that down it will copy all the ``package_dir_root`` subdirectory inside the sdk and it will run the compile target for ``package_name``.
+
+The standard openwrt feeds are included to meet possible depends.
+
+The default values for the options are:
+
+  * arch: ar71xx
+  * release: barrier_breaker
+  * package_dir_root: `pwd`
+  * build_dit: /tmp/owrt-pkgtest
+
+
+Example of usage
+^^^^^^^^^^^^^^^^
+
+Compile the provided example for barrier_breaker release, arch atheros::
+
+  owrt-pkgtest -a atheros -d test sys_test
+
+Compile openwisp-firmware for ar71xx::
+
+  git clone https://github.com/openwisp/OpenWISP-Firmware
+  cd OpenWISP-Firmware
+  owrt-pkgtest -d meta openwisp-fw

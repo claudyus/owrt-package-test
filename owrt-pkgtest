@@ -10,6 +10,7 @@ echo owrt-pkgtest - OpenWrt Package tester
 #default values
 arch=ar71xx
 release=barrier_breaker
+dir_package=`pwd`/
 build_dir=/tmp/owrt-pkgtest
 
 #parse command line

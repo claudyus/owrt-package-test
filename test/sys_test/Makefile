@@ -21,6 +21,9 @@ endef
 define Build/Prepare
 endef
 
+define Build/Compile
+endef
+
 define Package/sys_test/install
 	$(INSTALL_DIR) $(1)/
 	echo test > $(1)/sys_test
