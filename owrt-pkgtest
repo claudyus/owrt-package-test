@@ -44,13 +44,23 @@ if [ -z $test_pkg ]; then
 fi
 
 _downlod_sdk() {
+    #SDKs url
+    declare -A sdk_url
+    sdk_url[barrier_breaker ar71xx]="https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+    sdk_url[barrier_breaker atheros]="https://downloads.openwrt.org/barrier_breaker/14.07/atheros/generic/OpenWrt-SDK-atheros-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+    sdk_url[barrier_breaker x86]="https://downloads.openwrt.org/barrier_breaker/14.07/x86/generic/OpenWrt-SDK-x86-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+
+    #TODO update chaos_calmer urls after release (RC2 urls atm)
+    sdk_url[chaos_calmer ar71xx]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/ar71xx/generic/OpenWrt-SDK-15.05-rc2-ar71xx-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+    sdk_url[chaos_calmer ath25]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/ath25/generic/OpenWrt-SDK-15.05-rc2-ath25_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+    sdk_url[chaos_calmer x86]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/x86/generic/OpenWrt-SDK-15.05-rc2-x86-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+
     if [ ! -d $build_dir/owrt-sdk/ ]; then
-        # download the sdk and extract it inside build_dir
         mkdir -p $build_dir/owrt-sdk/
-        #TODO retrieve all SDKs
-        if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
-            wget http://lagopus.rd.unidata.it/sdk/sdk_${release}_${arch}.tar.bz2 -O $build_dir/sdk_${release}_${arch}.tar.bz2
-        fi
+    fi
+    # download the sdk and extract it inside build_dir
+    if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
+        wget ${sdk_url[${release} ${arch}]}  -O $build_dir/sdk_${release}_${arch}.tar.bz2
         tar xjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
     fi
 }
