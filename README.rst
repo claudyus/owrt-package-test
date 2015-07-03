@@ -24,7 +24,7 @@ Usage of the script
 
 The owrt-pkgtest utilities support the following options::
 
-  owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] <package_name>
+  owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] [-m <mirror_url>] <package_name>
 
 
 It will download the correct ``arch/release`` sdk from a webserver mirror than it will
@@ -39,6 +39,7 @@ The default values for the options are:
   * release: barrier_breaker
   * package_dir_root: `pwd`
   * build_dit: /tmp/owrt-pkgtest
+  * mirror: https://downloads.openwrt.org
 
 
 Example of usage

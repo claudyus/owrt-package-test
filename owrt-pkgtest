@@ -11,6 +11,9 @@ arch=ar71xx
 release=barrier_breaker
 dir_package=`pwd`/
 build_dir=/tmp/owrt-pkgtest
+# allow override of base url from a mirror, known available mirrors are:
+#  * http://mirror1.mirror.garr.it/mirrors/openwrt/
+base_url=https://downloads.openwrt.org/
 
 #parse command line
 while [ $# -gt 0 ]; do
@@ -31,6 +34,10 @@ while [ $# -gt 0 ]; do
             build_dir=$2
             shift 1
         ;;
+        -m)
+            base_url=$2
+            shift 1
+        ;;
         *)
             test_pkg=$1
             shift
@@ -46,21 +53,22 @@ fi
 _downlod_sdk() {
     #SDKs url
     declare -A sdk_url
-    sdk_url[barrier_breaker ar71xx]="https://downloads.openwrt.org/barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
-    sdk_url[barrier_breaker atheros]="https://downloads.openwrt.org/barrier_breaker/14.07/atheros/generic/OpenWrt-SDK-atheros-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
-    sdk_url[barrier_breaker x86]="https://downloads.openwrt.org/barrier_breaker/14.07/x86/generic/OpenWrt-SDK-x86-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+    sdk_url[barrier_breaker ar71xx]="barrier_breaker/14.07/ar71xx/generic/OpenWrt-SDK-ar71xx-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+    sdk_url[barrier_breaker atheros]="barrier_breaker/14.07/atheros/generic/OpenWrt-SDK-atheros-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
+    sdk_url[barrier_breaker x86]="barrier_breaker/14.07/x86/generic/OpenWrt-SDK-x86-for-linux-x86_64-gcc-4.8-linaro_uClibc-0.9.33.2.tar.bz2"
 
     #TODO update chaos_calmer urls after release (RC2 urls atm)
-    sdk_url[chaos_calmer ar71xx]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/ar71xx/generic/OpenWrt-SDK-15.05-rc2-ar71xx-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
-    sdk_url[chaos_calmer ath25]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/ath25/generic/OpenWrt-SDK-15.05-rc2-ath25_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
-    sdk_url[chaos_calmer x86]="https://downloads.openwrt.org/chaos_calmer/15.05-rc2/x86/generic/OpenWrt-SDK-15.05-rc2-x86-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+    sdk_url[chaos_calmer ar71xx]="chaos_calmer/15.05-rc2/ar71xx/generic/OpenWrt-SDK-15.05-rc2-ar71xx-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+    sdk_url[chaos_calmer ath25]="chaos_calmer/15.05-rc2/ath25/generic/OpenWrt-SDK-15.05-rc2-ath25_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
+    sdk_url[chaos_calmer x86]="chaos_calmer/15.05-rc2/x86/generic/OpenWrt-SDK-15.05-rc2-x86-generic_gcc-4.8-linaro_uClibc-0.9.33.2.Linux-x86_64.tar.bz2"
 
     if [ ! -d $build_dir/owrt-sdk/ ]; then
         mkdir -p $build_dir/owrt-sdk/
     fi
     # download the sdk and extract it inside build_dir
     if [ ! -f $build_dir/sdk_${release}_${arch}.tar.bz2 ]; then
-        wget ${sdk_url[${release} ${arch}]}  -O $build_dir/sdk_${release}_${arch}.tar.bz2
+        dl_url=${base_url}${sdk_url[${release} ${arch}]}
+        wget ${dl_url}  -O $build_dir/sdk_${release}_${arch}.tar.bz2
         tar xjf $build_dir/sdk_${release}_${arch}.tar.bz2 -C $build_dir/owrt-sdk/ --strip-components=1
     fi
 }
