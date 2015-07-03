@@ -5,4 +5,5 @@ install:
 
 script:
     - bash8 owrt-pkgtest
-    - make test
+    - make
+    - sudo make install && test -f /usr/local/bin/owrt-pkgtest
