@@ -24,7 +24,7 @@ Usage of the script
 
 The owrt-pkgtest utilities support the following options::
 
-  owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] [-m <mirror_url>] <package_name>
+  owrt-pkgtest [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] [-m <mirror_url>] <package_name1> [package_name2] ...
 
 
 It will download the correct ``arch/release`` sdk from a webserver mirror than it will

@@ -6,6 +6,23 @@
 
 echo owrt-pkgtest - OpenWrt Package tester
 
+_usage() {
+cat << EOU
+
+ OpenWrt package compile tester
+
+  usage: $0 [-h] [-a <arch>] [-r <release>] [-d <package_dir_root>] [-b <build_dir>] [-m <mirror_url>] <package_name1> [package_name2] ...
+
+  Options:
+    -h: print this help and exit
+    -a: set a different architecture (default: ar71xx)
+    -r: use a different release (default: barrier_breaker)
+    -d: set a the package direcory root (default: `pwd`)
+    -b: setup the building dir (default: /tmp/owrt-pkgtest
+    -m: setup the baseurl for a different mirror (default: https://downloads.openwrt.org)
+EOU
+}
+
 #default values
 arch=ar71xx
 release=barrier_breaker
@@ -16,36 +33,34 @@ build_dir=/tmp/owrt-pkgtest
 base_url=https://downloads.openwrt.org/
 
 #parse command line
-while [ $# -gt 0 ]; do
-    case $1  in
-        -a)
-            arch=$2
-            shift 2
-        ;;
-        -r)
-            release=$2
-            shift 2
-        ;;
-        -d)
-            dir_package=$2/
-            shift 1
-        ;;
-        -b)
-            build_dir=$2
-            shift 1
-        ;;
-        -m)
-            base_url=$2
-            shift 1
-        ;;
-        *)
-            test_pkg=$1
-            shift
-        ;;
+while getopts "ha:r:d:b:m:" OPTION; do
+    case $OPTION in
+        a)
+            arch=$OPTARG
+            ;;
+        r)
+            release=$OPTARG
+            ;;
+        d)
+            dir_package=$OPTARG
+            ;;
+        b)
+            build_dir=$OPTARG
+            ;;
+        m)
+            base_url=$OPTARG
+            ;;
+        h|?)
+            _usage
+            exit 1
+            ;;
     esac
 done
+shift $((OPTIND -1))
+test_pkgs=$*
 
-if [ -z $test_pkg ]; then
+echo $test_pkgs
+if [ -z $test_pkgs ]; then
     echo "err: no package name provided. exiting"
     exit 1
 fi
@@ -86,6 +101,8 @@ _downlod_sdk
 
 _add_package2test
 
-make -C $build_dir/owrt-sdk package/$test_pkg/compile V=s
+for pkg in $test_pkgs; do
+    make -C $build_dir/owrt-sdk package/$pkg/compile V=s
+done
 
 exit $?
