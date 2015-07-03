@@ -94,7 +94,6 @@ _add_package2test() {
     echo "src-link testing $build_dir/owrt-sdk/pkg" >> $build_dir/owrt-sdk/feeds.conf
     $build_dir/owrt-sdk/scripts/feeds update
     $build_dir/owrt-sdk/scripts/feeds list -r testing
-    $build_dir/owrt-sdk/scripts/feeds install -a -p testing -d y
 }
 
 _downlod_sdk
@@ -102,6 +101,7 @@ _downlod_sdk
 _add_package2test
 
 for pkg in $test_pkgs; do
+    $build_dir/owrt-sdk/scripts/feeds install -d y $pkg
     make -C $build_dir/owrt-sdk package/$pkg/compile V=s
 done
 
