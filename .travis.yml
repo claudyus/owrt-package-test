@@ -1,9 +1,9 @@
+sudo: false
 language: python
 
 install:
-    - sudo pip install bash8
+    - pip install bash8
 
 script:
     - bash8 owrt-pkgtest
     - make
-    - sudo make install && test -f /usr/local/bin/owrt-pkgtest
