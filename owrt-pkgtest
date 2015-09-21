@@ -16,7 +16,7 @@ cat << EOU
   Options:
     -h: print this help and exit
     -a: set a different architecture (default: ar71xx)
-    -r: use a different release (default: barrier_breaker)
+    -r: use a different release (default: chaos_calmer)
     -d: set a the package direcory root (default: `pwd`)
     -b: setup the building dir (default: /tmp/owrt-pkgtest
     -m: setup the baseurl for a different mirror (default: https://downloads.openwrt.org)
@@ -25,7 +25,7 @@ EOU
 
 #default values
 arch=ar71xx
-release=barrier_breaker
+release=chaos_calmer
 dir_package=`pwd`/
 build_dir=/tmp/owrt-pkgtest
 # allow override of base url from a mirror, known available mirrors are:

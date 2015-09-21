@@ -36,7 +36,7 @@ The standard openwrt feeds are included to meet possible depends.
 The default values for the options are:
 
   * arch: ar71xx
-  * release: barrier_breaker
+  * release: chaos_calmer
   * package_dir_root: `pwd`
   * build_dit: /tmp/owrt-pkgtest
   * mirror: https://downloads.openwrt.org
@@ -45,7 +45,7 @@ The default values for the options are:
 Example of usage
 ^^^^^^^^^^^^^^^^
 
-Compile the provided example for barrier_breaker release, arch atheros::
+Compile the provided example for chaos_calmer release, arch atheros::
 
   owrt-pkgtest -a atheros -d test sys_test
 
