@@ -62,7 +62,7 @@ done
 shift $((OPTIND -1))
 test_pkgs=$*
 
-if [ -z $test_pkgs ]; then
+if [ -z "$test_pkgs" ]; then
     echo "err: no package name provided. exiting"
     exit 1
 fi
