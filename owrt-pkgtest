@@ -33,7 +33,7 @@ build_dir=/tmp/owrt-pkgtest
 base_url=https://downloads.openwrt.org/
 
 #parse command line
-while getopts "ha:r:d:b:m:" OPTION; do
+while getopts "hxa:r:d:b:m:" OPTION; do
     case $OPTION in
         a)
             arch=$OPTARG
@@ -50,6 +50,9 @@ while getopts "ha:r:d:b:m:" OPTION; do
         m)
             base_url=$OPTARG
             ;;
+        x)
+            set -x
+            ;;
         h|?)
             _usage
             exit 1
@@ -59,7 +62,6 @@ done
 shift $((OPTIND -1))
 test_pkgs=$*
 
-echo $test_pkgs
 if [ -z $test_pkgs ]; then
     echo "err: no package name provided. exiting"
     exit 1
